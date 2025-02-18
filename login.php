@@ -6,6 +6,11 @@
     <title>Fuelivery | Log In</title>
     <link rel="stylesheet" href="login.css">  <!-- Link your CSS file -->
 </head>
+<style>
+  body {
+    background-color: red !important;
+  }
+</style>
 <body>
     <div class="login-container">
         <h2>Login to Fuelivery</h2>
