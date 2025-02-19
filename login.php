@@ -6,7 +6,7 @@ session_start();
 $host = "db.bshabouwkhvwxbqnsdwk.supabase.co";
 $dbname = "postgres";
 $user = "postgres";
-$password = "[YOUR-PASSWORD]";
+$password = "Fuelivery2025-";
 $port = "5432";
 
 // Connect to Supabase (PostgreSQL)
