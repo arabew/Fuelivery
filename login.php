@@ -1,3 +1,51 @@
+<?php
+// Start the session
+session_start();
+
+// Supabase connection details
+$host = "db.bshabouwkhvwxbqnsdwk.supabase.co";
+$dbname = "postgres";
+$user = "postgres";
+$password = "[YOUR-PASSWORD]";
+$port = "5432";
+
+// Connect to Supabase (PostgreSQL)
+$conn = pg_connect("host=$host dbname=$dbname user=$user password=$password port=$port");
+
+if (!$conn) {
+    die("Connection failed: " . pg_last_error());
+}
+
+// Handle login request
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'login') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Retrieve the user record using prepared statements
+    $query = "SELECT * FROM users WHERE email = $1";
+    $result = pg_query_params($conn, $query, array($email));
+
+    if (pg_num_rows($result) > 0) {
+        $row = pg_fetch_assoc($result);
+        
+        // Verify the password
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['email'] = $email;
+            header("Location: request_delivery.php");
+            exit;
+        } else {
+            echo "Incorrect password";
+        }
+    } else {
+        echo "User not found";
+    }
+
+    pg_free_result($result);
+}
+
+pg_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
